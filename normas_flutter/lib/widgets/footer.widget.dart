@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class FooterWidget extends StatelessWidget {
   @override
@@ -14,16 +13,19 @@ class FooterWidget extends StatelessWidget {
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                "assets/logo/logo-small-white.png",
-                height: 50,
+                "assets/images/marca-labtime-menor.png",
+                color: Color.fromRGBO(33, 33, 33, 0.6),
+                height: 18,
               ),
               SizedBox(
                 width: 20,
               ),
               Image.asset(
-                "assets/logo/logo-small.png",
+                "assets/images/marca-ufg.png",
+                color: Color.fromRGBO(33, 33, 33, 0.6),
                 height: 50,
               ),
             ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:normas_flutter/pages/SingUp.page.dart';
+import 'package:normas_flutter/pages/singup.page.dart';
+import 'package:normas_flutter/pages/users.page.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignUpPage(),
+      home: UsersPage(),
     );
   }
 }

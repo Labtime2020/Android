@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:normas_flutter/widgets/drawer.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -21,31 +22,7 @@ class SignUpPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer'),
-              decoration: BoxDecoration(
-                color: Color(0xFF006CD0),
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerWidget(context),
       body: SignUpWidgetPage(),
     );
   }
@@ -87,7 +64,9 @@ class SignUpWidgetPage extends StatelessWidget {
                             width: 120.0,
                             height: 120.0,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                changeImageProfileDialog(context);
+                              },
                             ),
                           ),
                         ),
@@ -122,6 +101,73 @@ class SignUpWidgetPage extends StatelessWidget {
             ),
           ),
           FooterWidget(),
+        ],
+      ),
+    );
+  }
+
+  void changeImageProfileDialog(BuildContext context) {
+    Dialog dialogchangeImageProfile = Dialog(
+      child: Container(
+          height: 345.0,
+          width: 300.0,
+          child: changeImageProfileWidget(context)),
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => dialogchangeImageProfile);
+  }
+
+  Widget changeImageProfileWidget(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "Alterar Avatar",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF616161),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                color: Color(0xFF616161),
+                icon: Icon(
+                  Icons.close,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: CircleAvatar(
+              backgroundImage:
+                  ExactAssetImage('assets/images/profile_image.jpg'),
+            ),
+          ),
+          RaisedButton(
+            child: Text("ENVIAR IMAGEM"),
+            color: Color(0xFF006CD0),
+            textColor: Colors.white,
+            onPressed: () {},
+          ),
+          Text(
+            "Formatos de imagem: .bmp, jpg ou .png\ntamanho máximo 5MB",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF006CD0),
+            ),
+          )
         ],
       ),
     );
