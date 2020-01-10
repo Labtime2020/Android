@@ -35,7 +35,9 @@ class SignUpWidgetPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: Text("Cadastrar"),
         backgroundColor: Color(0xFF006CD0),
@@ -186,6 +188,7 @@ class SignUpFormWidget extends StatelessWidget {
               labelStyle: TextStyle(
                 fontSize: 18,
               ),
+              contentPadding: EdgeInsets.only(top: 10),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -197,6 +200,7 @@ class SignUpFormWidget extends StatelessWidget {
               labelStyle: TextStyle(
                 fontSize: 18,
               ),
+              contentPadding: EdgeInsets.only(top: 10),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -209,6 +213,7 @@ class SignUpFormWidget extends StatelessWidget {
               labelStyle: TextStyle(
                 fontSize: 18,
               ),
+              contentPadding: EdgeInsets.only(top: 10),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -221,6 +226,7 @@ class SignUpFormWidget extends StatelessWidget {
               labelStyle: TextStyle(
                 fontSize: 18,
               ),
+              contentPadding: EdgeInsets.only(top: 10),
             ),
             style: TextStyle(
               fontSize: 20,
