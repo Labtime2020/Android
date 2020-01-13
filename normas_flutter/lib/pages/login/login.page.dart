@@ -114,8 +114,8 @@ class _SingInModalDialogWidgetState extends State<SingInModalDialogWidget> {
                 builder: (_) {
                   return _textField(
                     labelText: "Senha",
-                    onChanged: controller.user.changeSenha,
-                    errorText: controller.validateSenha,
+                    onChanged: controller.user.changePassword,
+                    errorText: controller.validatePassword,
                   );
                 },
               ),

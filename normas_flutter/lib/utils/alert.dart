@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-alert(context, String msg) {
+alert(context, String msg, String title) {
   showDialog(
       context: context,
       //Para não fechar a caixa de diálogo qdo clicar fora dela
@@ -11,7 +11,7 @@ alert(context, String msg) {
           //Para não permitir que a caixa de diálogo feche qdo clicar em voltar no Aparelho
           onWillPop: () async => false,
           child: AlertDialog(
-            title: Text("Carros"),
+            title: Text(title),
             content: Text(msg),
             actions: <Widget>[
               FlatButton(

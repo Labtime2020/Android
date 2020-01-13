@@ -15,11 +15,11 @@ abstract class _LoginControllerBase with Store {
 
   @computed
   bool get isValid {
-    return validateEmail() == null && validateSenha() == null;
+    return validateEmail() == null && validatePassword() == null;
   }
 
-  String validateSenha() {
-    if (user.senha == null || user.senha.isEmpty) {
+  String validatePassword() {
+    if (user.password == null || user.password.isEmpty) {
       return "Este campo é obrigatorio";
     }
     return null;
@@ -36,11 +36,11 @@ abstract class _LoginControllerBase with Store {
 
   Future<void> onClickLogin() async {
     String login = user.email;
-    String senha = user.senha;
+    String password = user.password;
 
-    print("Login: $login, Senha: $senha");
+    print("Login: $login, Senha: $password");
 
-    ApiResponse response = await LoginApi.login(login, senha);
+    ApiResponse response = await LoginApi.login(login, password);
 
     if (response.ok) {
       User user = response.result;

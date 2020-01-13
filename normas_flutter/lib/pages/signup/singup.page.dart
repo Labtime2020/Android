@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:normas_flutter/pages/signup/signup.controller.dart';
 import 'package:normas_flutter/widgets/drawer.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final signUpController = SignUpController();
+
+  _textField({String labelText, onChanged, String Function() errorText}) {
+    return TextFormField(
+      onChanged: onChanged,
+      keyboardType: TextInputType.emailAddress,
+      obscureText: labelText == 'Senha' ? true : false,
+      decoration: InputDecoration(
+        errorText: errorText == null ? null : errorText(),
+        contentPadding: EdgeInsets.only(top: 10),
+        labelText: labelText,
+        labelStyle: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 20,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +51,101 @@ class SignUpPage extends StatelessWidget {
         ],
       ),
       drawer: DrawerWidget(context),
-      body: SignUpWidgetPage(),
+      body: signUpWidgetPage(context),
     );
   }
-}
 
-class SignUpWidgetPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget signUpFormWidget(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Observer(
+            builder: (_) {
+              return _textField(
+                labelText: "Nome",
+                onChanged: signUpController.userSignUp.changeName,
+                errorText: signUpController.validateName,
+              );
+            },
+          ),
+          Observer(
+            builder: (_) {
+              return _textField(
+                labelText: "Sobrenome",
+                onChanged: signUpController.userSignUp.changeLastName,
+                errorText: signUpController.validateLastName,
+              );
+            },
+          ),
+          Observer(
+            builder: (_) {
+              return _textField(
+                labelText: "Email",
+                onChanged: signUpController.userSignUp.changeEmail,
+                errorText: signUpController.validateEmail,
+              );
+            },
+          ),
+          Observer(
+            builder: (_) {
+              return _textField(
+                labelText: "Senha",
+                onChanged: signUpController.userSignUp.changePassword,
+                errorText: signUpController.validatePassword,
+              );
+            },
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5),
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              "Letras e números, de 6 a 15 caracteres",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 13.0,
+                color: Color.fromRGBO(33, 33, 33, 0.6),
+              ),
+            ),
+          ),
+          Observer(
+            builder: (_) {
+              return _textField(
+                labelText: "Confirmar senha",
+                onChanged: signUpController.userSignUp.changePasswordConfirm,
+                errorText: signUpController.validatePasswordConfirm,
+              );
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Observer(
+            builder: (_) {
+              return RaisedButton(
+                onPressed: signUpController.signUpIsValid
+                    ? () {
+                        //Navigator.pop(context);
+                        signUpController.onClickSignUp(context);
+                      }
+                    : null,
+                textColor: Colors.white,
+                color: Color(0xFF006CD0),
+                child: Text("CADASTRAR"),
+              );
+            },
+          ),
+          RaisedButton(
+            onPressed: () {},
+            textColor: Colors.black,
+            color: Color(0xFFE4E4E4),
+            child: Text("CANCELAR"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget signUpWidgetPage(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -98,7 +213,7 @@ class SignUpWidgetPage extends StatelessWidget {
                     color: Color.fromRGBO(33, 33, 33, 0.6),
                   ),
                 ),
-                SignUpFormWidget(),
+                signUpFormWidget(context),
               ],
             ),
           ),
@@ -170,107 +285,6 @@ class SignUpWidgetPage extends StatelessWidget {
               color: Color(0xFF006CD0),
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class SignUpFormWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Nome*',
-              labelStyle: TextStyle(
-                fontSize: 18,
-              ),
-              contentPadding: EdgeInsets.only(top: 10),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Sobrenome*',
-              labelStyle: TextStyle(
-                fontSize: 18,
-              ),
-              contentPadding: EdgeInsets.only(top: 10),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              labelText: 'E-mail*',
-              labelStyle: TextStyle(
-                fontSize: 18,
-              ),
-              contentPadding: EdgeInsets.only(top: 10),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          TextFormField(
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Senha*',
-              labelStyle: TextStyle(
-                fontSize: 18,
-              ),
-              contentPadding: EdgeInsets.only(top: 10),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 5),
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              "Letras e números, de 6 a 15 caracteres",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 13.0,
-                color: Color.fromRGBO(33, 33, 33, 0.6),
-              ),
-            ),
-          ),
-          TextFormField(
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Confirmar Senha*',
-              labelStyle: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          RaisedButton(
-            onPressed: () {},
-            textColor: Colors.white,
-            color: Color(0xFF006CD0),
-            child: Text("CADASTRAR"),
-          ),
-          RaisedButton(
-            onPressed: () {},
-            textColor: Colors.black,
-            color: Color(0xFFE4E4E4),
-            child: Text("CANCELAR"),
-          ),
         ],
       ),
     );

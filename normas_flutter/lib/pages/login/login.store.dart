@@ -15,7 +15,7 @@ abstract class _LoginStoreBase with Store {
   changeEmail(String value) => email = value;
 
   @observable
-  String senha;
+  String password;
   @action
-  changeSenha(String value) => senha = value;
+  changePassword(String value) => password = value;
 }
