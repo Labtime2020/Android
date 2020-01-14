@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:normas_flutter/pages/forgot_password/forgot_password.page.dart';
 import 'package:normas_flutter/pages/login/login.controller.dart';
 import 'package:normas_flutter/pages/signup/singup.page.dart';
 import 'package:normas_flutter/utils/nav.dart';
@@ -143,7 +144,7 @@ class _SingInModalDialogWidgetState extends State<SingInModalDialogWidget> {
                   child: Text("Esqueci Minha Senha"),
                   color: Colors.white,
                   textColor: Color(0xFF006CD0),
-                  onPressed: () {},
+                  onPressed: () => forgotPassword(context),
                 ),
               ),
               SizedBox(
