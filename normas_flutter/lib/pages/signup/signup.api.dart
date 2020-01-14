@@ -1,40 +1,48 @@
-import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:normas_flutter/models/user.model.dart';
 import 'package:normas_flutter/pages/api_response.dart';
-import 'package:http/http.dart' as http;
 import 'package:normas_flutter/utils/const.dart';
 
 class SignUpApi {
   static Future<ApiResponse<User>> signUp(String email, String name,
-      String lastname, String password, bool isAdmin) async {
+      String lastname, String password, bool isAdmin, File imagePath) async {
     try {
-      var urlSignUp = '${Consts.baseURL}/cadastrar';
+      String path = imagePath.path;
+      var pathImage = path.substring(path.indexOf("/") + 1, path.length);
+      var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
+      print(path);
+      Dio dio = new Dio();
 
-      Map<String, String> headersLogin = {"Content-Type": "application/json"};
-      Map paramsSignUp = {
-        "email": email,
-        "nome": name,
-        "sobrenome": lastname,
-        "password": password,
-        "isAdmin": isAdmin
-      };
+      dio.options.baseUrl = "${Consts.baseURL}";
+      dio.options.connectTimeout = 5000;
+      dio.options.receiveTimeout = 3000;
+      //dio.options.headers['Content-Type'] = 'application/json';
+      dio.options.headers['Content-Type'] = 'multipart/form-data';
 
-      String responseBody = json.encode(paramsSignUp);
+      FormData formData = FormData.fromMap({
+        "usuario": {
+          "email": email,
+          "nome": name,
+          "sobrenome": lastname,
+          "password": password,
+          "isAdmin": isAdmin
+        },
+        "file": await MultipartFile.fromFile(imagePath.path,
+            filename: "profile_image.jpg")
+      });
 
-      var responseSignUp =
-          await http.post(urlSignUp, body: responseBody, headers: headersLogin);
+      var responseSignUp = await dio.post("/info", data: formData);
 
       print('Response SignUp status: ${responseSignUp.statusCode}');
-      print('Response SignUp body: ${responseSignUp.body}');
+      print('Response SignUp body: ${responseSignUp.data}');
 
-      Map mapResponse = json.decode(responseSignUp.body);
+      print(responseSignUp.data["msg"]);
 
-      print('Response Map body: ${mapResponse["code"]}');
-
-      if (responseSignUp.statusCode == 200) {
-        if (mapResponse["code"] != 0) {
-          return ApiResponse.error(mapResponse["msg"]);
+      if (responseSignUp.statusCode == 2000) {
+        if (responseSignUp.data["code"] != 0) {
+          return ApiResponse.error(responseSignUp.data["msg"]);
         }
 
         Map<String, String> userSignUpConfirmed = {
@@ -48,7 +56,7 @@ class SignUpApi {
         return ApiResponse.ok(user);
       }
 
-      return ApiResponse.error(mapResponse["error"]);
+      return ApiResponse.error(responseSignUp.data["error"]);
     } catch (error, exception) {
       print("Erro de login > $error > $exception");
 

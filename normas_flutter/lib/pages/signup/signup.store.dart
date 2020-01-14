@@ -1,9 +1,22 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 part 'signup.store.g.dart';
 
 class SignUpStore = _SignUpStoreBase with _$SignUpStore;
 
 abstract class _SignUpStoreBase with Store {
+  @observable
+  File image;
+  @action
+  Future getImage() async {
+    var newImage = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    print(newImage);
+    image = newImage;
+  }
+
   @observable
   String name;
   @action

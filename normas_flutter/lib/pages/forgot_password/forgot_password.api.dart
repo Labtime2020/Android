@@ -1,49 +1,35 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:normas_flutter/models/user.model.dart';
 import 'package:normas_flutter/pages/api_response.dart';
-import 'package:http/http.dart' as http;
 import 'package:normas_flutter/utils/const.dart';
 
 class ForgotPasswordApi {
   static Future<ApiResponse<User>> forgotPassword(String email) async {
     try {
-      var urlForgotPassword = '${Consts.baseURL}/ESQUECERSENHA';
+      Dio dio = new Dio();
 
-      Map<String, String> headersLogin = {"Content-Type": "application/json"};
-      Map paramsForgot = {"username": email};
+      dio.options.baseUrl = "${Consts.baseURL}";
+      dio.options.connectTimeout = 5000;
+      dio.options.receiveTimeout = 3000;
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers["authorization"] = "${Consts.token}";
 
-      String responseBody = json.encode(paramsForgot);
+      var responseForgot = await dio.post("/recuperarsenha", data: email);
 
-      var responseLogin = await http.post(urlForgotPassword,
-          body: responseBody, headers: headersLogin);
+      print('Response Login status: ${responseForgot.statusCode}');
+      print('Response Login body: ${responseForgot.data}');
 
-      print('Response Login status: ${responseLogin.statusCode}');
-      print('Response Login header: ${responseLogin.headers['authorization']}');
+      print(responseForgot.data["msg"]);
 
-      ///////////
+      // if (responseUser.statusCode == 200) {
+      //   final user = User.fromJson(mapResponse);
+      //   user.save();
 
-      var urlUser = '${Consts.baseURL}/usuariologado';
+      //   return ApiResponse.ok(user);
+      // }
 
-      Map<String, String> headersUser = {
-        "Authorization": responseLogin.headers['authorization']
-      };
-
-      var responseUser = await http.get(urlUser, headers: headersUser);
-
-      print('Response User status: ${responseUser.statusCode}');
-      print('Response User header: ${responseUser.body}');
-
-      Map mapResponse = json.decode(responseUser.body);
-
-      if (responseUser.statusCode == 200) {
-        final user = User.fromJson(mapResponse);
-        user.save();
-
-        return ApiResponse.ok(user);
-      }
-
-      return ApiResponse.error(mapResponse["error"]);
+      //return ApiResponse.error(mapResponse["error"]);
+      return ApiResponse.error("error");
     } catch (error, exception) {
       print("Erro de login > $error > $exception");
 

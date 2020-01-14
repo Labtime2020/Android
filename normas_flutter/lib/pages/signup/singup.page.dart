@@ -276,7 +276,16 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Text("ENVIAR IMAGEM"),
             color: Color(0xFF006CD0),
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: signUpController.userSignUp.getImage,
+          ),
+          Observer(
+            builder: (_) {
+              return Text(
+                signUpController.userSignUp.image.toString(),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              );
+            },
           ),
           Text(
             "Formatos de imagem: .bmp, jpg ou .png\ntamanho máximo 5MB",

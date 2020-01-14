@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
@@ -86,12 +88,13 @@ abstract class _SignUpControllerBase with Store {
     String lastname = userSignUp.lastname;
     String password = userSignUp.password;
     bool isAdmin = userSignUp.isAdmin;
+    File image = userSignUp.image;
 
     print(
         "Login: $email, Name: $name, Lastname: $lastname, Password: $password, isAdmin: $isAdmin");
 
     ApiResponse response =
-        await SignUpApi.signUp(email, name, lastname, password, isAdmin);
+        await SignUpApi.signUp(email, name, lastname, password, isAdmin, image);
 
     if (response.ok) {
       //User userSignUp = response.result;
