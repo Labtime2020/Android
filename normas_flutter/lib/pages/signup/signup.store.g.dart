@@ -9,6 +9,23 @@ part of 'signup.store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SignUpStore on _SignUpStoreBase, Store {
+  final _$imageAtom = Atom(name: '_SignUpStoreBase.image');
+
+  @override
+  File get image {
+    _$imageAtom.context.enforceReadPolicy(_$imageAtom);
+    _$imageAtom.reportObserved();
+    return super.image;
+  }
+
+  @override
+  set image(File value) {
+    _$imageAtom.context.conditionallyRunInAction(() {
+      super.image = value;
+      _$imageAtom.reportChanged();
+    }, _$imageAtom, name: '${_$imageAtom.name}_set');
+  }
+
   final _$nameAtom = Atom(name: '_SignUpStoreBase.name');
 
   @override
@@ -113,6 +130,16 @@ mixin _$SignUpStore on _SignUpStoreBase, Store {
 
   final _$_SignUpStoreBaseActionController =
       ActionController(name: '_SignUpStoreBase');
+
+  @override
+  dynamic changeImage(File value) {
+    final _$actionInfo = _$_SignUpStoreBaseActionController.startAction();
+    try {
+      return super.changeImage(value);
+    } finally {
+      _$_SignUpStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic changeName(String value) {

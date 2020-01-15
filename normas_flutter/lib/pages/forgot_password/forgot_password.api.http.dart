@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 
 class ForgotPasswordApi {

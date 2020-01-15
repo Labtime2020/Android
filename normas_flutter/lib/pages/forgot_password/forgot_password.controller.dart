@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
 import 'package:normas_flutter/pages/forgot_password/forgot_password.api.dart';
 import 'package:normas_flutter/pages/forgot_password/forgot_password.store.dart';
+import 'package:normas_flutter/utils/api_response.dart';
 part 'forgot_password.controller.g.dart';
 
 class ForgotPasswordController = _ForgotPasswordControllerBase

@@ -9,6 +9,24 @@ part of 'register_standard.store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
+  final _$fileStandardAtom =
+      Atom(name: '_RegisterStandardStoreBase.fileStandard');
+
+  @override
+  File get fileStandard {
+    _$fileStandardAtom.context.enforceReadPolicy(_$fileStandardAtom);
+    _$fileStandardAtom.reportObserved();
+    return super.fileStandard;
+  }
+
+  @override
+  set fileStandard(File value) {
+    _$fileStandardAtom.context.conditionallyRunInAction(() {
+      super.fileStandard = value;
+      _$fileStandardAtom.reportChanged();
+    }, _$fileStandardAtom, name: '${_$fileStandardAtom.name}_set');
+  }
+
   final _$nameStandardAtom =
       Atom(name: '_RegisterStandardStoreBase.nameStandard');
 
@@ -47,22 +65,22 @@ mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
         name: '${_$descriptionStandardAtom.name}_set');
   }
 
-  final _$urlImageStandardAtom =
-      Atom(name: '_RegisterStandardStoreBase.urlImageStandard');
+  final _$urlFileStandardAtom =
+      Atom(name: '_RegisterStandardStoreBase.urlFileStandard');
 
   @override
-  String get urlImageStandard {
-    _$urlImageStandardAtom.context.enforceReadPolicy(_$urlImageStandardAtom);
-    _$urlImageStandardAtom.reportObserved();
-    return super.urlImageStandard;
+  String get urlFileStandard {
+    _$urlFileStandardAtom.context.enforceReadPolicy(_$urlFileStandardAtom);
+    _$urlFileStandardAtom.reportObserved();
+    return super.urlFileStandard;
   }
 
   @override
-  set urlImageStandard(String value) {
-    _$urlImageStandardAtom.context.conditionallyRunInAction(() {
-      super.urlImageStandard = value;
-      _$urlImageStandardAtom.reportChanged();
-    }, _$urlImageStandardAtom, name: '${_$urlImageStandardAtom.name}_set');
+  set urlFileStandard(String value) {
+    _$urlFileStandardAtom.context.conditionallyRunInAction(() {
+      super.urlFileStandard = value;
+      _$urlFileStandardAtom.reportChanged();
+    }, _$urlFileStandardAtom, name: '${_$urlFileStandardAtom.name}_set');
   }
 
   final _$categoriesStandardAtom =
@@ -87,14 +105,14 @@ mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
   final _$idStandardAtom = Atom(name: '_RegisterStandardStoreBase.idStandard');
 
   @override
-  String get idStandard {
+  int get idStandard {
     _$idStandardAtom.context.enforceReadPolicy(_$idStandardAtom);
     _$idStandardAtom.reportObserved();
     return super.idStandard;
   }
 
   @override
-  set idStandard(String value) {
+  set idStandard(int value) {
     _$idStandardAtom.context.conditionallyRunInAction(() {
       super.idStandard = value;
       _$idStandardAtom.reportChanged();
@@ -103,6 +121,17 @@ mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
 
   final _$_RegisterStandardStoreBaseActionController =
       ActionController(name: '_RegisterStandardStoreBase');
+
+  @override
+  dynamic changeFileStandard(File value) {
+    final _$actionInfo =
+        _$_RegisterStandardStoreBaseActionController.startAction();
+    try {
+      return super.changeFileStandard(value);
+    } finally {
+      _$_RegisterStandardStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic changeNameStandard(String value) {
@@ -127,11 +156,11 @@ mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
   }
 
   @override
-  dynamic changeUrlImageStandard(String value) {
+  dynamic changeUrlFileStandard(String value) {
     final _$actionInfo =
         _$_RegisterStandardStoreBaseActionController.startAction();
     try {
-      return super.changeUrlImageStandard(value);
+      return super.changeUrlFileStandard(value);
     } finally {
       _$_RegisterStandardStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -149,7 +178,29 @@ mixin _$RegisterStandardStore on _RegisterStandardStoreBase, Store {
   }
 
   @override
-  dynamic changeIdStandard(String value) {
+  dynamic addCategoriesStandard(String value) {
+    final _$actionInfo =
+        _$_RegisterStandardStoreBaseActionController.startAction();
+    try {
+      return super.addCategoriesStandard(value);
+    } finally {
+      _$_RegisterStandardStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeCategoriesStandard(int value) {
+    final _$actionInfo =
+        _$_RegisterStandardStoreBaseActionController.startAction();
+    try {
+      return super.removeCategoriesStandard(value);
+    } finally {
+      _$_RegisterStandardStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeIdStandard(int value) {
     final _$actionInfo =
         _$_RegisterStandardStoreBaseActionController.startAction();
     try {

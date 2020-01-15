@@ -169,29 +169,41 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Column(
                       children: <Widget>[
-                        Material(
-                          elevation: 1.0,
-                          shape: CircleBorder(),
-                          clipBehavior: Clip.hardEdge,
-                          color: Colors.transparent,
-                          child: Ink.image(
-                            image:
-                                AssetImage('assets/images/profile_image.jpg'),
-                            fit: BoxFit.cover,
-                            width: 120.0,
-                            height: 120.0,
-                            child: InkWell(
-                              onTap: () {
-                                changeImageProfileDialog(context);
-                              },
-                            ),
-                          ),
+                        Observer(
+                          builder: (_) {
+                            return Material(
+                              elevation: 1.0,
+                              shape: CircleBorder(),
+                              clipBehavior: Clip.hardEdge,
+                              color: Colors.transparent,
+                              child: Ink.image(
+                                image: signUpController.userSignUp.image == null
+                                    ? ExactAssetImage(
+                                        'assets/images/profile_none_image.png')
+                                    : ExactAssetImage(
+                                        signUpController.userSignUp.image.path),
+                                fit: BoxFit.cover,
+                                width: 120.0,
+                                height: 120.0,
+                                child: InkWell(
+                                  onTap: () {
+                                    changeImageProfileDialog(context);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        Text(
-                          "Alterar Avatar",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Color.fromRGBO(33, 33, 33, 0.6),
+                        InkWell(
+                          onTap: () {
+                            changeImageProfileDialog(context);
+                          },
+                          child: Text(
+                            "Alterar Avatar",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color: Color.fromRGBO(33, 33, 33, 0.6),
+                            ),
                           ),
                         ),
                       ],
@@ -264,24 +276,37 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ],
           ),
-          SizedBox(
-            height: 100,
-            width: 100,
-            child: CircleAvatar(
-              backgroundImage:
-                  ExactAssetImage('assets/images/profile_image.jpg'),
-            ),
+          Observer(
+            builder: (_) {
+              return SizedBox(
+                height: 100,
+                width: 100,
+                child: CircleAvatar(
+                  backgroundImage: signUpController.userSignUp.image == null
+                      ? ExactAssetImage('assets/images/profile_none_image.png')
+                      : ExactAssetImage(signUpController.userSignUp.image.path),
+                ),
+              );
+            },
           ),
           RaisedButton(
             child: Text("ENVIAR IMAGEM"),
             color: Color(0xFF006CD0),
             textColor: Colors.white,
-            onPressed: signUpController.userSignUp.getImage,
+            onPressed: signUpController.changeImage,
           ),
           Observer(
             builder: (_) {
               return Text(
-                signUpController.userSignUp.image.toString(),
+                signUpController.userSignUp.image == null
+                    ? ""
+                    : signUpController.userSignUp.image.toString().substring(
+                          signUpController.userSignUp.image
+                                  .toString()
+                                  .lastIndexOf("/") +
+                              1,
+                          signUpController.userSignUp.image.toString().length,
+                        ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               );

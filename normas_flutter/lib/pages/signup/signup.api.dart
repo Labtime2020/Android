@@ -1,48 +1,51 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
+import 'package:http/http.dart' as http;
+import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 
 class SignUpApi {
-  static Future<ApiResponse<User>> signUp(String email, String name,
-      String lastname, String password, bool isAdmin, File imagePath) async {
+  static Future<ApiResponse<User>> signUp(
+      String email, String name, String lastname, String password, bool isAdmin,
+      [File imagePath]) async {
     try {
-      String path = imagePath.path;
-      var pathImage = path.substring(path.indexOf("/") + 1, path.length);
-      var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
-      print(path);
-      Dio dio = new Dio();
+      Map paramsSignUp = {
+        "email": email,
+        "nome": name,
+        "sobrenome": lastname,
+        "password": password,
+        "isAdmin": isAdmin
+      };
 
-      dio.options.baseUrl = "${Consts.baseURL}";
-      dio.options.connectTimeout = 5000;
-      dio.options.receiveTimeout = 3000;
-      //dio.options.headers['Content-Type'] = 'application/json';
-      dio.options.headers['Content-Type'] = 'multipart/form-data';
+      var uri = Uri.parse("${Consts.baseURL}/cadastrar");
 
-      FormData formData = FormData.fromMap({
-        "usuario": {
-          "email": email,
-          "nome": name,
-          "sobrenome": lastname,
-          "password": password,
-          "isAdmin": isAdmin
-        },
-        "file": await MultipartFile.fromFile(imagePath.path,
-            filename: "profile_image.jpg")
-      });
+      var request;
+      if (imagePath == null) {
+        request = http.MultipartRequest('POST', uri)
+          ..fields['usuario'] = json.encode(paramsSignUp);
+      } else {
+        request = http.MultipartRequest('POST', uri)
+          ..fields['usuario'] = json.encode(paramsSignUp)
+          ..files.add(await http.MultipartFile.fromPath(
+            'file',
+            imagePath.path,
+          ));
+      }
 
-      var responseSignUp = await dio.post("/info", data: formData);
+      var responseSignUp = await request.send();
+      print(responseSignUp.statusCode);
 
-      print('Response SignUp status: ${responseSignUp.statusCode}');
-      print('Response SignUp body: ${responseSignUp.data}');
+      final respStr = await responseSignUp.stream.bytesToString();
+      Map mapResponse = json.decode(respStr);
 
-      print(responseSignUp.data["msg"]);
+      print('Response Map code: ${mapResponse["code"]}');
+      print('Response Map msg: ${mapResponse["msg"]}');
 
-      if (responseSignUp.statusCode == 2000) {
-        if (responseSignUp.data["code"] != 0) {
-          return ApiResponse.error(responseSignUp.data["msg"]);
+      if (responseSignUp.statusCode == 200) {
+        if (mapResponse["code"] != 0) {
+          return ApiResponse.error(mapResponse["msg"]);
         }
 
         Map<String, String> userSignUpConfirmed = {
@@ -53,10 +56,10 @@ class SignUpApi {
         final user = User.fromJson(userSignUpConfirmed);
         user.save();
 
-        return ApiResponse.ok(user);
+        return ApiResponse.ok(user, "Cadastrado com sucesso");
       }
 
-      return ApiResponse.error(responseSignUp.data["error"]);
+      return ApiResponse.error(mapResponse["error"]);
     } catch (error, exception) {
       print("Erro de login > $error > $exception");
 

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 
-class RedefinePasswordApi {
+class LoginApi {
   static Future<ApiResponse<User>> login(String login, String password) async {
     try {
       var urlLogin = '${Consts.baseURL}/login';

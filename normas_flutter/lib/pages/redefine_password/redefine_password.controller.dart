@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:mobx/mobx.dart';
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
 import 'package:normas_flutter/pages/redefine_password/redefine_password.api.dart';
 import 'package:normas_flutter/pages/redefine_password/redefine_password.store.dart';
+import 'package:normas_flutter/utils/api_response.dart';
 part 'redefine_password.controller.g.dart';
 
 class RedefinePasswordController = _RedefinePasswordControllerBase

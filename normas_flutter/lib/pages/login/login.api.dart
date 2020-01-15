@@ -1,49 +1,46 @@
-import 'dart:convert';
-
+import 'package:dio/dio.dart';
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
-import 'package:http/http.dart' as http;
+import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 
 class LoginApi {
   static Future<ApiResponse<User>> login(String login, String password) async {
     try {
-      var urlLogin = '${Consts.baseURL}/login';
+      Dio dio = new Dio();
 
-      Map<String, String> headersLogin = {"Content-Type": "application/json"};
+      dio.options.baseUrl = "${Consts.baseURL}";
+      dio.options.connectTimeout = 5000;
+      dio.options.receiveTimeout = 3000;
+      dio.options.headers['content-Type'] = 'application/json';
+      //dio.options.headers["authorization"] = "${Consts.token}";
+
       Map paramsLogin = {"username": login, "password": password};
 
-      String responseBody = json.encode(paramsLogin);
-
-      var responseLogin =
-          await http.post(urlLogin, body: responseBody, headers: headersLogin);
+      var responseLogin = await dio.post("/login", data: paramsLogin);
 
       print('Response Login status: ${responseLogin.statusCode}');
-      print('Response Login header: ${responseLogin.headers['authorization']}');
+      print('Response Login header: ${responseLogin.data}');
 
-      ///////////
+      print(responseLogin.headers["authorization"]);
 
-      var urlUser = '${Consts.baseURL}/usuariologado';
+      //Get User Infos
+      dio.options.headers["authorization"] =
+          responseLogin.headers["authorization"];
 
-      Map<String, String> headersUser = {
-        "Authorization": responseLogin.headers['authorization']
-      };
-
-      var responseUser = await http.get(urlUser, headers: headersUser);
+      var responseUser = await dio.get("/usuariologado");
 
       print('Response User status: ${responseUser.statusCode}');
-      print('Response User header: ${responseUser.body}');
-
-      Map mapResponse = json.decode(responseUser.body);
+      print('Response User header: ${responseUser.data}');
 
       if (responseUser.statusCode == 200) {
-        final user = User.fromJson(mapResponse);
+        final user = User.fromJson(responseUser.data);
         user.save();
 
-        return ApiResponse.ok(user);
+        return ApiResponse.ok(user, "Cadastrado com sucesso");
       }
 
-      return ApiResponse.error(mapResponse["error"]);
+      return ApiResponse.error(responseUser.data["error"]);
+      //return ApiResponse.error("Não foi possível .");
     } catch (error, exception) {
       print("Erro de login > $error > $exception");
 

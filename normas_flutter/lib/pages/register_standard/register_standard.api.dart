@@ -1,58 +1,69 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
+import 'package:normas_flutter/models/norma.model.dart';
 import 'package:http/http.dart' as http;
+import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 import 'dart:async';
 
 class RegisterStandardApi {
-  static Future<ApiResponse<User>> registerStandard(
+  static Future<ApiResponse<Standard>> registerStandard(
       String nameStandard,
       String descriptionStandard,
       String urlImageStandard,
       List<String> categoriesStandard,
-      String idStandard) async {
+      int idStandard,
+      [File fileStandard]) async {
     try {
-      var urlRegisterStandard = '${Consts.baseURL}/registrarnorma';
+      print("registerStandard");
 
-      Map<String, String> headersLogin = {"Content-Type": "application/json"};
       Map paramsRegisterStandard = {
         "nome": nameStandard,
         "descricao": descriptionStandard,
         "url": urlImageStandard,
-        "categorias": categoriesStandard,
-        "id": idStandard
+        "isActive": true,
+        "tags": []
       };
 
-      String responseBody = json.encode(paramsRegisterStandard);
+      print(paramsRegisterStandard);
+      var uri = Uri.parse("${Consts.baseURL}/addNorma");
 
-      var responseRegisterStandard = await http.post(urlRegisterStandard,
-          body: responseBody, headers: headersLogin);
+      var request;
+      if (fileStandard == null) {
+        print("File Null");
+        request = http.MultipartRequest('POST', uri)
+          ..headers['Authorization'] = Consts.token
+          ..fields['norma'] = json.encode(paramsRegisterStandard);
+      } else {
+        print("File not Null");
+        request = http.MultipartRequest('POST', uri)
+          ..headers['Authorization'] = Consts.token
+          ..fields['norma'] = json.encode(paramsRegisterStandard)
+          ..files.add(await http.MultipartFile.fromPath(
+            'file',
+            fileStandard.path,
+          ));
+      }
+
+      var responseRegisterStandard = await request.send();
+      print(responseRegisterStandard.statusCode);
+
+      final respStr = await responseRegisterStandard.stream.bytesToString();
+      Map mapResponse = json.decode(respStr);
 
       print(
           'Response RegisterStandard status: ${responseRegisterStandard.statusCode}');
-      print('Response RegisterStandard body: ${responseRegisterStandard.body}');
+      print('Response RegisterStandard body: $mapResponse');
 
-      Map mapResponse = json.decode(responseRegisterStandard.body);
+      if (responseRegisterStandard.statusCode == 200) {
+        if (mapResponse["code"] != 0) {
+          return ApiResponse.error(mapResponse["msg"]);
+        }
+        final standard = Standard();
 
-      print('Response Map body: ${mapResponse["code"]}');
-
-      // if (responseRegisterStandard.statusCode == 200) {
-      //   if (mapResponse["code"] != 0) {
-      //     return ApiResponse.error(mapResponse["msg"]);
-      //   }
-
-      //   Map<String, String> userSignUpConfirmed = {
-      //     "nome": "$name",
-      //     "email": "$email",
-      //     "password": "$password"
-      //   };
-      //   final user = User.fromJson(userSignUpConfirmed);
-      //   user.save();
-
-      //   return ApiResponse.ok(user);
-      // }
+        return ApiResponse.ok(standard, "Norma cadastrada com sucesso");
+      }
 
       return ApiResponse.error(mapResponse["error"]);
     } catch (error, exception) {

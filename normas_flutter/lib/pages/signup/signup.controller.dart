@@ -2,22 +2,19 @@ import 'dart:io';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:normas_flutter/pages/api_response.dart';
+import 'package:normas_flutter/models/user.model.dart';
 import 'package:normas_flutter/pages/signup/signup.api.dart';
 import 'package:normas_flutter/pages/signup/signup.store.dart';
 import 'package:normas_flutter/utils/alert.dart';
+import 'package:normas_flutter/utils/api_response.dart';
 part 'signup.controller.g.dart';
 
 class SignUpController = _SignUpControllerBase with _$SignUpController;
 
 abstract class _SignUpControllerBase with Store {
   var userSignUp = SignUpStore();
-
-  @computed
-  bool get isValidSignUp {
-    return validateEmail() == null && validatePassword() == null;
-  }
 
   String validateName() {
     if (userSignUp.name == null || userSignUp.name.isEmpty) {
@@ -73,6 +70,14 @@ abstract class _SignUpControllerBase with Store {
     return null;
   }
 
+  Future changeImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      print("Newimage: " + image.toString());
+      userSignUp.changeImage(image);
+    }
+  }
+
   @computed
   bool get signUpIsValid {
     return validateName() == null &&
@@ -97,8 +102,9 @@ abstract class _SignUpControllerBase with Store {
         await SignUpApi.signUp(email, name, lastname, password, isAdmin, image);
 
     if (response.ok) {
-      //User userSignUp = response.result;
-      //print(">>> $userSignUp");
+      alert(context, response.msg, "Cadastrar");
+      User userSignUp = response.result;
+      print(">>> $userSignUp");
     } else {
       alert(context, response.msg, "Cadastrar");
     }

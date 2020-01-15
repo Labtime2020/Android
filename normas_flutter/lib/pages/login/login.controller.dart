@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:normas_flutter/models/user.model.dart';
-import 'package:normas_flutter/pages/api_response.dart';
 import 'package:normas_flutter/pages/login/login.api.dart';
 import 'package:normas_flutter/pages/login/login.store.dart';
+import 'package:normas_flutter/utils/api_response.dart';
 part 'login.controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;

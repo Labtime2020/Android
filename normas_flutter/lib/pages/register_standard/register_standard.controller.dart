@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
-import 'package:normas_flutter/pages/api_response.dart';
+import 'package:normas_flutter/models/norma.model.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.api.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.store.dart';
 import 'package:normas_flutter/utils/alert.dart';
+import 'package:normas_flutter/utils/api_response.dart';
 part 'register_standard.controller.g.dart';
 
 class RegisterStandardController = _RegisterStandardControllerBase
@@ -39,47 +40,45 @@ abstract class _RegisterStandardControllerBase with Store {
     return null;
   }
 
-  String validateUrlImageStandard() {
-    if (userRegisterStandard.urlImageStandard == null ||
-        userRegisterStandard.urlImageStandard.isEmpty) {
-      return "Este campo é obrigatorio";
-    }
-    return null;
-  }
-
   @computed
   bool get registerStandardIsValid {
     return validateNameStandard() == null &&
-        validateDescriptionStandard() == null;
+        validateDescriptionStandard() == null &&
+        (userRegisterStandard.urlFileStandard != null ||
+            userRegisterStandard.fileStandard != null);
   }
 
   Future getFile() async {
     File file = await FilePicker.getFile();
 
-    userRegisterStandard.fileStandard = file;
-    print(userRegisterStandard.fileStandard.toString());
+    if (file != null) {
+      userRegisterStandard.fileStandard = file;
+      print(userRegisterStandard.fileStandard.toString());
+    }
   }
 
   Future<void> onClickRegisterStandard(BuildContext context) async {
     String nameStandard = userRegisterStandard.nameStandard;
     String descriptionStandard = userRegisterStandard.descriptionStandard;
-    String urlImageStandard = userRegisterStandard.urlImageStandard;
+    String urlFileStandard = userRegisterStandard.urlFileStandard;
     List<String> categoriesStandard = userRegisterStandard.categoriesStandard;
-    String idStandard = userRegisterStandard.idStandard;
+    int idStandard = userRegisterStandard.idStandard;
+    File fileStandard = userRegisterStandard.fileStandard;
 
     print(
-        "nameStandard: $nameStandard, descriptionStandard: $descriptionStandard, urlImageStandard: $urlImageStandard, categoriesStandard: $categoriesStandard, idStandard: $idStandard");
+        "nameStandard: $nameStandard, descriptionStandard: $descriptionStandard, urlImageStandard: $urlFileStandard, categoriesStandard: $categoriesStandard, idStandard: $idStandard, fileStandard: ${fileStandard.toString()}");
 
     ApiResponse response = await RegisterStandardApi.registerStandard(
         nameStandard,
         descriptionStandard,
-        urlImageStandard,
+        urlFileStandard,
         categoriesStandard,
-        idStandard);
+        idStandard,
+        fileStandard);
 
     if (response.ok) {
-      //User userRegisterStandard = response.result;
-      //print(">>> $userRegisterStandard");
+      Standard registerStandard = response.result;
+      print(">>> $registerStandard");
     } else {
       alert(context, response.msg, "Cadastrar");
     }

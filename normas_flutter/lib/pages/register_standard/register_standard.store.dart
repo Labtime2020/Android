@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:mobx/mobx.dart';
 part 'register_standard.store.g.dart';
 
@@ -14,29 +13,37 @@ abstract class _RegisterStandardStoreBase with Store {
   changeFileStandard(File value) => fileStandard = value;
 
   @observable
-  String nameStandard;
+  String nameStandard = "";
   @action
   changeNameStandard(String value) => nameStandard = value;
 
   @observable
-  String descriptionStandard;
+  String descriptionStandard = "";
   @action
   changeDescriptionStandard(String value) => descriptionStandard = value;
 
   @observable
-  String urlImageStandard;
+  String urlFileStandard = "";
   @action
-  changeUrlImageStandard(String value) => urlImageStandard = value;
+  changeUrlFileStandard(String value) {
+    print(value);
+    urlFileStandard = value;
+    return;
+  }
 
   @observable
-  List<String> categoriesStandard;
+  List<String> categoriesStandard = [];
   @action
   changeCategoriesStandard(List<String> value) => categoriesStandard = value;
+  @action
+  addCategoriesStandard(String value) => categoriesStandard.add(value);
+  @action
+  removeCategoriesStandard(int value) => categoriesStandard.removeAt(value);
 
   @observable
-  String idStandard;
+  int idStandard;
   @action
-  changeIdStandard(String value) => idStandard = value;
+  changeIdStandard(int value) => idStandard = value;
 
   //TO DO AVATAR FILE
 }

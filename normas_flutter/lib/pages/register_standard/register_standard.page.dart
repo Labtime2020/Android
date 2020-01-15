@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_tags/tag.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.controller.dart';
 import 'package:normas_flutter/widgets/drawer.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
@@ -12,12 +15,19 @@ class RegisterStandardPage extends StatefulWidget {
 class _RegisterStandardPageState extends State<RegisterStandardPage> {
   final registerStandardController = RegisterStandardController();
 
-  _textField({String labelText, onChanged, String Function() errorText}) {
+  _textField(
+      {String labelText,
+      String textInit,
+      onChanged,
+      String Function() errorText}) {
     return TextFormField(
+      initialValue: textInit != null ? textInit : "",
       onChanged: onChanged,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        counterText: labelText == "Descrição" ? "100/1000" : null,
+        counterText: labelText == "Descrição"
+            ? "${registerStandardController.userRegisterStandard.descriptionStandard.length}/1000"
+            : null,
         errorText: errorText == null ? null : errorText(),
         contentPadding: EdgeInsets.only(top: 10),
         labelText: labelText,
@@ -63,6 +73,8 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
             builder: (_) {
               return _textField(
                 labelText: "Nome da norma",
+                textInit: registerStandardController
+                    .userRegisterStandard.nameStandard,
                 onChanged: registerStandardController
                     .userRegisterStandard.changeNameStandard,
                 errorText: registerStandardController.validateNameStandard,
@@ -73,6 +85,8 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
             builder: (_) {
               return _textField(
                 labelText: "Descrição",
+                textInit: registerStandardController
+                    .userRegisterStandard.descriptionStandard,
                 onChanged: registerStandardController
                     .userRegisterStandard.changeDescriptionStandard,
                 errorText:
@@ -84,9 +98,11 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
             builder: (_) {
               return _textField(
                 labelText: "URL",
+                textInit: registerStandardController
+                    .userRegisterStandard.urlFileStandard,
                 onChanged: registerStandardController
-                    .userRegisterStandard.changeUrlImageStandard,
-                errorText: registerStandardController.validateUrlImageStandard,
+                    .userRegisterStandard.changeUrlFileStandard,
+                errorText: null,
               );
             },
           ),
@@ -96,15 +112,11 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
           Container(
             child: Row(
               children: <Widget>[
-                Observer(
-                  builder: (_) {
-                    return RaisedButton(
-                      onPressed: registerStandardController.getFile,
-                      textColor: Colors.white,
-                      color: Color(0xFF006CD0),
-                      child: Text("ARQUIVO"),
-                    );
-                  },
+                RaisedButton(
+                  onPressed: registerStandardController.getFile,
+                  textColor: Colors.white,
+                  color: Color(0xFF006CD0),
+                  child: Text("ARQUIVO"),
                 ),
                 SizedBox(
                   width: 20,
@@ -116,7 +128,7 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
                         registerStandardController
                                     .userRegisterStandard.fileStandard ==
                                 null
-                            ? "Tamanho máximo 100MB"
+                            ? 'Tamanho máximo 100MB'
                             : registerStandardController
                                 .userRegisterStandard.fileStandard
                                 .toString()
@@ -158,6 +170,7 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
               ),
             ),
           ),
+          _tags2,
           Row(
             children: <Widget>[
               Observer(
@@ -206,6 +219,7 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
         backgroundColor: Color(0xFF006CD0),
       ),
       body: ListView(
+        shrinkWrap: false,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(20),
@@ -232,6 +246,71 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
           ),
           FooterWidget(),
         ],
+      ),
+    );
+  }
+
+  Widget get _tags2 {
+    return Container(
+      width: double.infinity,
+      child: Tags(
+        horizontalScroll: true,
+        textField: TagsTextField(
+            hintText: "",
+            autofocus: false,
+            inputDecoration: InputDecoration(
+              contentPadding: EdgeInsets.only(bottom: 2),
+              isDense: true,
+              labelText: "Inserir TAG",
+              labelStyle: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            textStyle: TextStyle(
+              fontSize: 18,
+            ),
+            onSubmitted: registerStandardController
+                .userRegisterStandard.addCategoriesStandard),
+        spacing: 5,
+        itemCount: registerStandardController
+                    .userRegisterStandard.categoriesStandard.length ==
+                null
+            ? 0
+            : registerStandardController
+                .userRegisterStandard.categoriesStandard.length,
+        itemBuilder: (index) {
+          final item = registerStandardController
+              .userRegisterStandard.categoriesStandard[index];
+
+          return ItemTags(
+            elevation: 0,
+            key: Key(index.toString()),
+            index: index,
+            title: item,
+            pressEnabled: false,
+            activeColor: Colors.grey[300],
+            textActiveColor: Colors.grey[900],
+            removeButton: ItemTagsRemoveButton(
+              size: 15,
+              color: Colors.grey[900],
+              backgroundColor: Colors.white.withOpacity(0.0),
+            ),
+            textScaleFactor:
+                utf8.encode(item.substring(0, 1)).length > 2 ? 0.8 : 1,
+            textStyle: TextStyle(
+              fontSize: 14,
+            ),
+            onRemoved: () {
+              setState(
+                () {
+                  registerStandardController
+                      .userRegisterStandard.categoriesStandard
+                      .removeAt(index);
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

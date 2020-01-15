@@ -1,7 +1,5 @@
 class Consts {
-  static String baseURL = 'http://192.168.1.227:9090';
-  static String imageURL =
-      'C:\Users\mrcsdev\Documents\Repositories\LabTIME\Sistema - Normas\Android\normas_flutter\assets\images\profile_image.jpg';
+  static String baseURL = 'http://192.168.1.238:9090';
   static String token =
-      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSYWZhZWxjcyIsImV4cCI6MTU3ODI0MTk2M30.B9nucyV1wZ2r8KSLsU-2HtjDs41b5GYfPIY8tFA2NERB0OL24SRZCa-NJAs6EWVA4sJnpCmePYxnKA6hzzVbTA';
+      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmNzQGRldi5jb20iLCJleHAiOjE1Nzk5NjA3MDJ9.OX89LngyfTNHx7Ff2ofBAC5NpRgjHBfpSCx46PTv8h6JZV4z0Z2uXGPQ5b5pxK0fUgd_josSCGHBmmZmKUKFtA';
 }

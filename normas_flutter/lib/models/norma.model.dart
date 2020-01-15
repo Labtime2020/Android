@@ -6,22 +6,24 @@ class Standard {
   String descriptionStandard;
   String urlImageStandard;
   List<String> categoriesStandard;
-  String idStandard;
+  int idStandard;
+  bool isActiveStandard;
 
-  Standard({
-    this.nameStandard,
-    this.descriptionStandard,
-    this.urlImageStandard,
-    this.categoriesStandard,
-    this.idStandard,
-  });
+  Standard(
+      {this.nameStandard,
+      this.descriptionStandard,
+      this.urlImageStandard,
+      this.categoriesStandard,
+      this.idStandard,
+      this.isActiveStandard});
 
   Standard.fromJson(Map<String, dynamic> json) {
     this.nameStandard = json['nome'];
     this.descriptionStandard = json['descricao'];
     this.urlImageStandard = json['url'];
-    this.categoriesStandard = json['categorias'];
-    this.idStandard = json['id'];
+    this.categoriesStandard = json['tags'];
+    this.idStandard = json['normaId'];
+    this.isActiveStandard = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
