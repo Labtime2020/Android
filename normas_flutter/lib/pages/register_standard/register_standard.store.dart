@@ -25,11 +25,7 @@ abstract class _RegisterStandardStoreBase with Store {
   @observable
   String urlFileStandard = "";
   @action
-  changeUrlFileStandard(String value) {
-    print(value);
-    urlFileStandard = value;
-    return;
-  }
+  changeUrlFileStandard(String value) => urlFileStandard = value;
 
   @observable
   List<String> categoriesStandard = [];

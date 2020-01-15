@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:normas_flutter/pages/register_standard/register_standard.page.dart';
+import 'package:normas_flutter/pages/home/home.page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterStandardPage(),
+      home: HomePage(),
     );
   }
 }
