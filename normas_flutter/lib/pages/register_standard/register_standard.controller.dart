@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
-import 'package:normas_flutter/models/norma.model.dart';
+import 'package:normas_flutter/models/standard.model.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.api.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.store.dart';
 import 'package:normas_flutter/utils/alert.dart';

@@ -1,13 +1,17 @@
 // import 'package:normas_flutter/utils/prefs.dart';
 // import 'dart:convert' as convert;
 
+import 'dart:io';
+
 class Standard {
   String nameStandard;
   String descriptionStandard;
   String urlImageStandard;
   List<String> categoriesStandard;
-  int idStandard;
+  int idStandard = 0;
+  int views;
   bool isActiveStandard;
+  File fileStandard;
 
   Standard(
       {this.nameStandard,
@@ -15,14 +19,16 @@ class Standard {
       this.urlImageStandard,
       this.categoriesStandard,
       this.idStandard,
+      this.views,
       this.isActiveStandard});
 
   Standard.fromJson(Map<String, dynamic> json) {
     this.nameStandard = json['nome'];
     this.descriptionStandard = json['descricao'];
     this.urlImageStandard = json['url'];
-    this.categoriesStandard = json['tags'];
+    this.categoriesStandard = json['tags'].cast<String>();
     this.idStandard = json['normaId'];
+    this.views = json['visualizacao'];
     this.isActiveStandard = json['isActive'];
   }
 
@@ -33,6 +39,7 @@ class Standard {
     data['url'] = this.urlImageStandard;
     data['categorias'] = this.categoriesStandard;
     data['id'] = this.idStandard;
+    data['visualizacao'] = this.views;
     return data;
   }
 
@@ -63,6 +70,6 @@ class Standard {
 
   @override
   String toString() {
-    return 'standard{nome: $nameStandard, descricao $descriptionStandard, url: $urlImageStandard, categorias: $categoriesStandard, id: $idStandard}';
+    return '{normaId: $idStandard, nome: $nameStandard, descricao: $descriptionStandard, url: $urlImageStandard, isActive: $isActiveStandard, tags: $categoriesStandard, views: $views}';
   }
 }

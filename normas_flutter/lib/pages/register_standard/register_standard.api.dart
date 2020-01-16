@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:normas_flutter/models/norma.model.dart';
 import 'package:http/http.dart' as http;
+import 'package:normas_flutter/models/standard.model.dart';
 import 'package:normas_flutter/utils/api_response.dart';
 import 'package:normas_flutter/utils/const.dart';
 import 'dart:async';
@@ -19,6 +18,7 @@ class RegisterStandardApi {
       print("registerStandard");
 
       Map paramsRegisterStandard = {
+        "normaId": null,
         "nome": nameStandard,
         "descricao": descriptionStandard,
         "url": urlImageStandard,

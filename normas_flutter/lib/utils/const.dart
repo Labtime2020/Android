@@ -1,5 +1,5 @@
 class Consts {
-  static String baseURL = 'http://192.168.1.238:9090';
+  static String baseURL = 'http://192.168.1.227:9090';
   static String token =
-      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmNzQGRldi5jb20iLCJleHAiOjE1Nzk5NjA3MDJ9.OX89LngyfTNHx7Ff2ofBAC5NpRgjHBfpSCx46PTv8h6JZV4z0Z2uXGPQ5b5pxK0fUgd_josSCGHBmmZmKUKFtA';
+      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYWZhZWxneW5jYXN0cm82M0BnbWFpbC5jb20uUk9MRV9BRE1JTiIsImV4cCI6MTU4MDAwMTA3OX0.TnzLr99ZVJ31RwDooAQZCoJi5Oyl0mdjsoG3T5uLIWucySsbNSQDzrtVQT9CEsbaEMmzdBI0Zmpe8pwymzjM-w';
 }

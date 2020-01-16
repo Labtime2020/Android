@@ -40,6 +40,4 @@ abstract class _RegisterStandardStoreBase with Store {
   int idStandard;
   @action
   changeIdStandard(int value) => idStandard = value;
-
-  //TO DO AVATAR FILE
 }
