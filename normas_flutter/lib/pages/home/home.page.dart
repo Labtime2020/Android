@@ -120,8 +120,8 @@ Widget filterStandard() {
                 child: InkWell(
                   // inkwell color
                   child: SizedBox(
-                    width: 25,
-                    height: 25,
+                    width: 40,
+                    height: 40,
                     child: Icon(
                       Icons.keyboard_arrow_down,
                       size: 25,
@@ -154,15 +154,19 @@ Widget listStadard() {
     child: Column(
       children: <Widget>[
         Container(
-          alignment: Alignment.topRight,
-          height: 25,
+          alignment: Alignment.centerRight,
           child: InkWell(
             onTap: () {},
-            child: Text(
-              "CARREGAR MAIS",
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.black54,
+            child: Container(
+              width: 110,
+              alignment: Alignment.center,
+              height: 30,
+              child: Text(
+                "CARREGAR MAIS",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black54,
+                ),
               ),
             ),
           ),
@@ -251,19 +255,24 @@ Widget cardItem() {
           color: Colors.black54,
         ),
         Container(
-          height: 40,
+          height: 50,
           padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               InkWell(
                 onTap: () {},
-                child: Text(
-                  "VISUALIZAR",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.blue,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 40,
+                  width: 85,
+                  child: Text(
+                    "VISUALIZAR",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),
@@ -274,8 +283,8 @@ Widget cardItem() {
                       child: Material(
                         child: InkWell(
                           child: SizedBox(
-                            width: 30,
-                            height: 30,
+                            width: 40,
+                            height: 40,
                             child: Icon(
                               Icons.favorite_border,
                               size: 25,
@@ -293,8 +302,8 @@ Widget cardItem() {
                       child: Material(
                         child: InkWell(
                           child: SizedBox(
-                            width: 30,
-                            height: 30,
+                            width: 40,
+                            height: 40,
                             child: Icon(
                               Icons.file_download,
                               size: 25,
