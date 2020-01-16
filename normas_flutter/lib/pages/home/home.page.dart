@@ -91,9 +91,15 @@ Widget searchStandard() {
           fontSize: 18,
         ),
         decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          suffixIcon: IconButton(
+            //TO DO
+            //onPressed: () => searchController.clear(),
+            onPressed: () {},
+            icon: Icon(Icons.clear),
+          ),
           hintText: "Buscar norma",
           border: InputBorder.none,
-          icon: Icon(Icons.search),
         ),
       ),
     ),
