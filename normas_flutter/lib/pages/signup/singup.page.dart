@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:normas_flutter/pages/signup/signup.controller.dart';
-import 'package:normas_flutter/widgets/drawer.widget.dart';
+import 'package:normas_flutter/widgets/app_bar.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -33,25 +33,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SizedBox(
-          height: 40,
-          child: Image.asset(
-            "assets/logo/logo-small-white.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        backgroundColor: Color(0xFF006CD0),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: DrawerWidget(context),
-      body: signUpWidgetPage(context),
+    return AppBarStandard(
+      appBody: signUpPage(context),
     );
   }
 
@@ -145,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget signUpWidgetPage(BuildContext context) {
+  Widget signUpPage(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -193,6 +176,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             );
                           },
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         InkWell(
                           onTap: () {

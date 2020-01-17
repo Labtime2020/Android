@@ -16,7 +16,7 @@ class ListStandard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10),
           child: controller.homeStore.standards == null
               ? Container(
-                  height: 10,
+                  height: 0,
                 )
               : ListView.builder(
                   shrinkWrap: true,

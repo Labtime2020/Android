@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_tags/tag.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.controller.dart';
-import 'package:normas_flutter/widgets/drawer.widget.dart';
+import 'package:normas_flutter/widgets/app_bar.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class RegisterStandardPage extends StatefulWidget {
@@ -43,25 +43,8 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SizedBox(
-          height: 40,
-          child: Image.asset(
-            "assets/logo/logo-small-white.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        backgroundColor: Color(0xFF006CD0),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: DrawerWidget(context),
-      body: registerStandardWidgetPage(context),
+    return AppBarStandard(
+      appBody: registerStandardWidgetPage(context),
     );
   }
 
@@ -215,7 +198,7 @@ class _RegisterStandardPageState extends State<RegisterStandardPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text("Cadastrar"),
+        title: Text("Cadastrar norma"),
         backgroundColor: Color(0xFF006CD0),
       ),
       body: ListView(

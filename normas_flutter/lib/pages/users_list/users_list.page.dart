@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:normas_flutter/widgets/drawer.widget.dart';
+import 'package:normas_flutter/widgets/app_bar.dart';
 
-class UsersList extends StatefulWidget {
+class UsersListPage extends StatefulWidget {
   static String tag = 'contactlist-page';
 
   @override
   State<StatefulWidget> createState() {
-    return _UsersListState();
+    return _UsersListPageState();
   }
 }
 
-class _UsersListState extends State<UsersList> {
+class _UsersListPageState extends State<UsersListPage> {
   TextEditingController searchController = TextEditingController();
   String filter;
 
@@ -34,25 +34,8 @@ class _UsersListState extends State<UsersList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SizedBox(
-          height: 40,
-          child: Image.asset(
-            "assets/logo/logo-small-white.png",
-            fit: BoxFit.cover,
-          ),
-        ),
-        backgroundColor: Color(0xFF006CD0),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: DrawerWidget(context),
-      body: contactList(context, filter, searchController),
+    return AppBarStandard(
+      appBody: contactList(context, filter, searchController),
     );
   }
 }
