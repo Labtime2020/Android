@@ -4,7 +4,7 @@ import 'package:normas_flutter/pages/forgot_password/forgot_password.page.dart';
 import 'package:normas_flutter/pages/login/login.controller.dart';
 import 'package:normas_flutter/pages/signup/singup.page.dart';
 import 'package:normas_flutter/utils/nav.dart';
-import 'package:normas_flutter/widgets/app_bar.dart';
+import 'package:normas_flutter/widgets/app_bar.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class LoginPage extends StatefulWidget {

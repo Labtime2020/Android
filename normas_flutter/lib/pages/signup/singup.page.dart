@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:normas_flutter/pages/signup/signup.controller.dart';
-import 'package:normas_flutter/widgets/app_bar.dart';
+import 'package:normas_flutter/widgets/app_bar.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class SignUpPage extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_tags/tag.dart';
 import 'package:normas_flutter/pages/register_standard/register_standard.controller.dart';
-import 'package:normas_flutter/widgets/app_bar.dart';
+import 'package:normas_flutter/widgets/app_bar.widget.dart';
 import 'package:normas_flutter/widgets/footer.widget.dart';
 
 class RegisterStandardPage extends StatefulWidget {

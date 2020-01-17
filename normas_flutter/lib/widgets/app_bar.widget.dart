@@ -18,8 +18,7 @@ class AppBarStandard extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        // backgroundColor: Color(0xFF006CD0),
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xFF006CD0),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),

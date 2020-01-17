@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:normas_flutter/widgets/app_bar.dart';
+import 'package:normas_flutter/widgets/app_bar.widget.dart';
 
 class UsersListPage extends StatefulWidget {
   static String tag = 'contactlist-page';

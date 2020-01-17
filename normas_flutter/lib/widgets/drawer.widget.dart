@@ -106,6 +106,21 @@ class DrawerWidget extends StatelessWidget {
               Navigator.pushNamed(context, "/UsersList");
             },
           ),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.list),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text("SplashScreen"),
+                )
+              ],
+            ),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.pushNamed(context, "/Splash");
+            },
+          ),
         ],
       ),
     );
